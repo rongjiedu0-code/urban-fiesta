@@ -31,4 +31,4 @@ jobs:
       run: |
         # 注意：这里的文件名要和你上传的 Python 文件名一模一样！
         # 如果你上传的是 daily_tech_bot.py 就不用改
-        python daily_tech_bot.py
+        python import os.py
