@@ -1,0 +1,34 @@
+name: 每日科技早报
+
+on:
+  schedule:
+    # 每天北京时间早上 8:00 (UTC 0:00)
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 允许手动点击按钮运行
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install libraries
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run script
+      env:
+        # 这里会自动读取你在 Secrets 里配好的钥匙
+        KIMI_API_KEY: ${{ secrets.KIMI_API_KEY }}
+        PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
+      run: |
+        # 注意：这里的文件名要和你上传的 Python 文件名一模一样！
+        # 如果你上传的是 daily_tech_bot.py 就不用改
+        python daily_tech_bot.py
